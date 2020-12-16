@@ -25,8 +25,9 @@ function captureData(e) {
 }
 
 function logClick(e) {
+    console.log(e)
     var element = e.explicitOriginalTarget ? e.explicitOriginalTarget.id == '' ? e.explicitOriginalTarget.parentElement : e.explicitOriginalTarget : e.path[0]
-    console.log(element.id)
+    //console.log(element.id)
     captureData(element)
 }
 
