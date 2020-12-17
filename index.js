@@ -25,9 +25,10 @@ function captureData(e) {
 }
 
 function logClick(e) {
-    console.log(e)
-    console.dir(e)
-    console.log(JSON.stringify(e.target))
+    e = e || window.event
+    const target = e.target || e.srcElement
+    console.log(e, target)
+    console.dir(e, target)
 }
 
 document.addEventListener('click', logClick);
