@@ -25,7 +25,9 @@ function captureData(e) {
 }
 
 function logClick(e) {
-    console.log(JSON.stringify(e))
+    console.log(e)
+    const stringed = JSON.stringify(e.path[0])
+    console.log(stringed)
     var element = e.explicitOriginalTarget ? e.explicitOriginalTarget.id == '' ? e.explicitOriginalTarget.parentElement : e.explicitOriginalTarget : e.path[0]
     //console.log(element.id)
     captureData(element)
@@ -38,8 +40,4 @@ click events to take note of:
 e.type
 e.path[0].localName
 e.path[0].innerText || placeholder
-
-
-
-
 */
