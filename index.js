@@ -1,36 +1,15 @@
-
 var data = {}
-var submitComplete = false
-var entryCount = 0
-var finishedForm = false
-var eventCount = 0
 
-function confirmExit(){
-    // fetch('https://hooks.zapier.com/hooks/catch/8680204/ogihvar/', {
-    // method:"POST",
-    // body: JSON.stringify(data)
-    // })
-    // .then(result => {
-    // console.log("Completed with result:", result);
-    // });
-    return "Leaving so soon? Changes that you made may not be saved.";
-}
+function confirmExit(){}
 
-function captureData(e) {
-    // e.addEventListener("input", function logKey(event) {
-    //     const value = event.explicitOriginalTarget ? event.explicitOriginalTarget.value : event.path[0].value
-    //     console.log(value)
-    //     window.onbeforeunload = confirmExit;
-    // });
-}
+function captureData(e) {}
 
 function logClick(e) {
-    e = e || window.event
-    const target = e.target || e.srcElement
-    console.log(e, target)
-    console.dir(e, target)
+    const name = e.path[0].localName
+    const innerText = e.path[0].innerText
+    console.log(name, innerText)
+    console.dir(e)
 }
-
 document.addEventListener('click', logClick);
 
 /* 
