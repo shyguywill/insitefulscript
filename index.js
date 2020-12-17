@@ -26,11 +26,8 @@ function captureData(e) {
 
 function logClick(e) {
     console.log(e)
-    const stringed = JSON.stringify(e.path[0])
-    console.log(stringed)
-    var element = e.explicitOriginalTarget ? e.explicitOriginalTarget.id == '' ? e.explicitOriginalTarget.parentElement : e.explicitOriginalTarget : e.path[0]
-    //console.log(element.id)
-    captureData(element)
+    console.dir(e)
+    console.log(JSON.stringify(e.target))
 }
 
 document.addEventListener('click', logClick);
