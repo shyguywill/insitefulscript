@@ -7,7 +7,9 @@ function captureData(e) {}
 function logClick(e) {
     const name = e.path[0].localName
     const innerText = e.path[0].innerText
-    console.log(name, innerText)
+    const type = e.type
+    
+    console.log(name, innerText, type)
     console.dir(e)
 }
 document.addEventListener('click', logClick);
