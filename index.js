@@ -5,27 +5,35 @@ const contentWidth = [...document.body.children].reduce(
     - document.body.getBoundingClientRect().x
 
 const pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
-const entryTime = Date().toLocaleString()
+const time = Date().toLocaleString()
+var timeScrolled = 0
 
 function confirmExit(){}
-
-function captureData(e) {}
 
 function logClick(e) {
     const type = e.type
     const coords = { x: e.x, y: e.y }
     const name = e.target.localName
     const innerText = e.target.innerText
-    const navigated = e.target.href
+    const navLink = e.target.href
+    const spanWrapper = e.path[1].localName
+    const spanLink = e.path[1].href
     
-    console.log(type, coords, pageDims, name, innerText, navigated, entryTime)
+    console.log(type, coords, pageDims, name, innerText, navLink, entryTime, spanWrapper, spanLink)
     console.dir(e)
 }
+
 function logScroll(e){
+    timeScrolled += 1
+    console.log(timeScrolled)
+}
+
+function logInput(e) {
     console.log(e)
 }
 
 document.addEventListener('click', logClick);
+document.addEventListener('keypress', logInput)
 window.addEventListener('scroll', logScroll)
 
 /* 
