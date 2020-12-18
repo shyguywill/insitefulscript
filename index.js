@@ -6,7 +6,7 @@ const contentWidth = [...document.body.children].reduce(
 
 const pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 const time = Date().toLocaleString()
-var timeScrolled = 0
+var scrollCount = 0
 
 function confirmExit(){}
 
@@ -19,26 +19,21 @@ function logClick(e) {
     const spanWrapper = e.path[1].localName
     const spanLink = e.path[1].href
     
-    console.log(type, coords, pageDims, name, innerText, navLink, entryTime, spanWrapper, spanLink)
+    console.log(type, coords, pageDims, name, innerText, navLink, time, spanWrapper, spanLink)
     console.dir(e)
 }
 
 function logScroll(e){
-    timeScrolled += 1
-    console.log(timeScrolled)
+    scrollCount += 1
+    if (scrollCount % 5 == 0){
+        console.log(e)
+    }
 }
 
-function logInput(e) {
+function logKeyPress(e) {
     console.log(e)
-}
+} //better off logging input instead ?
 
 document.addEventListener('click', logClick);
-document.addEventListener('keypress', logInput)
+document.addEventListener('keypress', logKeyPress)
 window.addEventListener('scroll', logScroll)
-
-/* 
-click events to take note of:
-e.type
-e.path[0].localName
-e.path[0].innerText || placeholder
-*/
