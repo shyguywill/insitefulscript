@@ -18,7 +18,7 @@ function logClick(e) {
     const innerText = e.target.innerText
     const navigated = e.target.href
     
-    console.log(type, coords, pageDims, name, innerText, navigated)
+    console.log(type, coords, pageDims, name, innerText, navigated, entryTime)
     console.dir(e)
 }
 function logScroll(e){
