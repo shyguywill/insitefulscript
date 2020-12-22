@@ -1,32 +1,47 @@
-var time = Date().toLocaleString()
+var entryTime = Date().toLocaleString()
 var shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
 var visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-console.log(time, pageDims, shop, visitor)
+//a3d0a333-68c0-449a-807c-faceeafe1d90
+
+//console.log(entryTime, pageDims, shop, visitor)
 
 var scrollCount = 0
 var isScrolling;
 var isTyping;
 
-var data = {}
+var actionData = []
 
 function onUnload(e){
-  console.log('unloading', e)
+    const exitTime = Date().toLocaleString()
+    //console.log('unloading', exitTime)
+
+    const data = {
+        entryTime,
+        shop,
+        visitor,
+        pageDims,
+        actionData,
+        exitTime
+    }
+
+    console.log(data)
+
 }
 
 function logClick(e) {
     const type = e.type
-    const coords = { x: e.x, y: e.y }
+    const clickPosition = { x: e.x, y: e.y }
     const name = e.target.localName
     const innerText = e.target.innerText
     const navLink = e.target.href
     const spanWrapper = e.path[1].localName
     const spanLink = e.path[1].href
     
-    console.log(type, coords, name, innerText, navLink, spanWrapper, spanLink, time)
-    console.dir(window)
+    //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
+    actionData.push({type, clickPosition, name, innerText, navLink, spanWrapper, spanLink})
 }
 
 function logScroll(e){
@@ -35,7 +50,9 @@ function logScroll(e){
 	isScrolling = setTimeout(function() {
         scrollCount += 1
         const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-        console.log(type, scrollTop, scrollCount)
+        
+        //console.log(type, scrollTop, scrollCount)
+        actionData.push({type, scrollTop, scrollCount})
     }, 750);
 }
 
@@ -43,7 +60,9 @@ function logInput(e) {
     const type = e.type
     window.clearTimeout( isTyping );
 	isTyping = setTimeout(function() {
-        console.log(type)
+
+        console.log(e)
+        actionData.push({type})
     }, 500);
 }
 
