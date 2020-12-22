@@ -1,15 +1,15 @@
 var time = Date().toLocaleString()
-var shop
-var visitor
+var shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
+var visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-window.onload = function () {
-    shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
-    visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
-    console.log(shop, visitor)
-}
-console.log(time, pageDims)
+// window.onload = function () {
+//     shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
+//     visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
+//     console.log(shop, visitor)
+// }
+console.log(time, pageDims, shop, visitor)
 
 var scrollCount = 0
 var isScrolling;
@@ -42,8 +42,7 @@ function logScroll(e){
 }
 
 function logInput(e) {
-    const input = e.target.value
-    console.log(input)
+    console.log('is typing')
 }
 
 document.addEventListener('input', logInput)
