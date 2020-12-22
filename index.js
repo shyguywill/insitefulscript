@@ -4,19 +4,17 @@ var visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-// window.onload = function () {
-//     shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
-//     visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
-//     console.log(shop, visitor)
-// }
 console.log(time, pageDims, shop, visitor)
 
 var scrollCount = 0
 var isScrolling;
+var isTyping;
 
 var data = {}
 
-function confirmExit(){}
+function onUnload(e){
+  console.log('unloading', e)
+}
 
 function logClick(e) {
     const type = e.type
@@ -36,15 +34,20 @@ function logScroll(e){
     window.clearTimeout( isScrolling );
 	isScrolling = setTimeout(function() {
         scrollCount += 1
-        var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
+        const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
         console.log(type, scrollTop, scrollCount)
-    }, 500);
+    }, 750);
 }
 
 function logInput(e) {
-    console.log('is typing')
+    const type = e.type
+    window.clearTimeout( isTyping );
+	isTyping = setTimeout(function() {
+        console.log(type)
+    }, 500);
 }
 
 document.addEventListener('input', logInput)
-document.addEventListener('click', logClick);
+document.addEventListener('click', logClick)
 window.addEventListener('scroll', logScroll)
+window.addEventListener('beforeunload', onUnload)
