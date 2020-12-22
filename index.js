@@ -27,7 +27,7 @@ function onUnload(e){
         exitTime
     }
 
-    console.log(data)
+    console.log(JSON.stringify(data))
 
 }
 
@@ -58,11 +58,12 @@ function logScroll(e){
 
 function logInput(e) {
     const type = e.type
+    const action = e.inputType
+    const label = e.target.ariaLabel
+    const name = e.target.localName
     window.clearTimeout( isTyping );
 	isTyping = setTimeout(function() {
-
-        console.log(e)
-        actionData.push({type})
+        actionData.push({type, action, label, name})
     }, 500);
 }
 
