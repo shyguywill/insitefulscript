@@ -1,11 +1,12 @@
-const shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
-const visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
+//const shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
+//const visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
 const time = Date().toLocaleString()
 
 const contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 const pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-console.log(shop, visitor, time, pageDims)
+//console.log(shop, visitor, time, pageDims)
+console.log(window.ShopifyAnalytics)
 
 var scrollCount = 0
 var isScrolling;
@@ -23,7 +24,7 @@ function logClick(e) {
     const spanWrapper = e.path[1].localName
     const spanLink = e.path[1].href
     
-    console.log(type, coords, name, innerText, navLink, spanWrapper, spanLink)
+    console.log(type, coords, name, innerText, navLink, spanWrapper, spanLink, time)
     console.dir(window)
 }
 
