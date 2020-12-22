@@ -1,12 +1,15 @@
-//const shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
-//const visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
-const time = Date().toLocaleString()
+var time = Date().toLocaleString()
+var shop
+var visitor
+var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
+var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-const contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
-const pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
-
-//console.log(shop, visitor, time, pageDims)
-console.log(window.ShopifyAnalytics)
+window.onload = function () {
+    shop = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.shopId
+    visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
+    console.log(shop, visitor)
+}
+console.log(time, pageDims)
 
 var scrollCount = 0
 var isScrolling;
@@ -35,17 +38,14 @@ function logScroll(e){
         scrollCount += 1
         var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
         console.log(type, scrollTop, scrollCount)
-    }, 1000);
+    }, 500);
 }
 
-function logKeyPress(e) {
-    console.log(e)
-    e.addEventListener('input', function logInput(e) {
-        const input = e.target.value
-        console.log(input)
-    })
-} //better off logging input instead ?
+function logInput(e) {
+    const input = e.target.value
+    console.log(input)
+}
 
+document.addEventListener('input', logInput)
 document.addEventListener('click', logClick);
-document.addEventListener('keypress', logKeyPress)
 window.addEventListener('scroll', logScroll)
