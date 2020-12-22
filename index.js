@@ -53,18 +53,19 @@ function logScroll(e){
         
         //console.log(type, scrollTop, scrollCount)
         actionData.push({type, scrollTop, scrollCount})
-    }, 750);
+    }, 1000);
 }
 
 function logInput(e) {
     const type = e.type
     const action = e.inputType
-    const label = e.target.ariaLabel
     const name = e.target.localName
+    const innerText = e.target.ariaLabel
+    
     window.clearTimeout( isTyping );
 	isTyping = setTimeout(function() {
-        actionData.push({type, action, label, name})
-    }, 500);
+        actionData.push({type, action, name, innerText})
+    }, 750);
 }
 
 document.addEventListener('input', logInput)
