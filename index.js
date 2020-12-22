@@ -7,7 +7,6 @@ var pageDims = {height: document.body.scrollHeight, width: Math.min(document.bod
 //a3d0a333-68c0-449a-807c-faceeafe1d90
 
 //console.log(entryTime, pageDims, shop, visitor)
-
 var scrollCount = 0
 var isScrolling;
 var isTyping;
@@ -16,7 +15,6 @@ var actionData = []
 
 function onUnload(e){
     const exitTime = Date().toLocaleString()
-    //console.log('unloading', exitTime)
 
     const data = {
         entryTime,
@@ -27,8 +25,10 @@ function onUnload(e){
         exitTime
     }
 
-    console.log(JSON.stringify(data))
-
+    if (action.length){
+        console.log(JSON.stringify(data))
+        // hook here
+    }
 }
 
 function logClick(e) {
