@@ -28,6 +28,13 @@ function onUnload(){
     if (actionData.length && shop && visitor){
         console.log(JSON.stringify(data))
         // hook here
+        fetch('http://localhost:5000/', {
+            method:"POST",
+            body: JSON.stringify(data)
+        })
+        .then(result => {
+        console.log("Completed with result:", result);
+        });
     }
 }
 
