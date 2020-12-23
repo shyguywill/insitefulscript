@@ -30,7 +30,10 @@ function onUnload(){
         // hook here
         fetch('http://localhost:5000/', {
             method:"POST",
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': "application/json",
+            },
         })
         .then(result => {
         console.log("Completed with result:", result);
