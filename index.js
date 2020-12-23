@@ -1,19 +1,19 @@
 var entryTime = Date().toLocaleString()
-var shop = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.shopId
+var shop = window.Shopify?.shop
 var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
 //a3d0a333-68c0-449a-807c-faceeafe1d90
 
-console.log(window)
+// console.log(window)
 var scrollCount = 0
 var isScrolling;
 var isTyping;
 
 var actionData = []
 
-function onUnload(e){
+function onUnload(){
     const exitTime = Date().toLocaleString()
 
     const data = {
@@ -25,7 +25,7 @@ function onUnload(e){
         exitTime
     }
 
-    if (action.length && shop && visitor){
+    if (actionData.length && shop && visitor){
         console.log(JSON.stringify(data))
         // hook here
     }
