@@ -6,7 +6,7 @@ var pageDims = {height: document.body.scrollHeight, width: Math.min(document.bod
 
 //a3d0a333-68c0-449a-807c-faceeafe1d90
 
-console.log(window.ShopifyAnalytics.lib.trekkie.defaultAttributes)
+console.log(window.ShopifyAnalytics)
 var scrollCount = 0
 var isScrolling;
 var isTyping;
