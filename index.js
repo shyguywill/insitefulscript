@@ -1,12 +1,12 @@
-var entryTime = Date().toLocaleString()
+//Created by Sayo Williams 29/12/2020
+let date = new Date()
+date.setDate(date.getDate())
+var entryTime = date.toLocaleString()
 var shop = window.Shopify?.shop
 var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-//a3d0a333-68c0-449a-807c-faceeafe1d90
-
-// console.log(window)
 var scrollCount = 0
 var isScrolling;
 var isTyping;
@@ -14,7 +14,9 @@ var isTyping;
 var actionData = []
 
 function onUnload(){
-    const exitTime = Date().toLocaleString()
+    let date = new Date()
+    date.setDate(date.getDate())
+    const exitTime = date.toLocaleString()
 
     const data = {
         entryTime,
