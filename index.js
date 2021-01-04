@@ -43,11 +43,11 @@ function onUnload(e){
     }
 
     const { name, wrapper } = lastClicked
-    if (name == 'a' || wrapper == 'a'){
-        e.returnValue = null
+    console.log(lastClicked)
+    if (name !== 'a' || wrapper !== 'a'){
+        e.returnValue = `Are you sure you want to leave?`;
     }
 
-    e.returnValue = `Are you sure you want to leave?`;
 }
 
 function logClick(e) {
