@@ -1,7 +1,7 @@
 //Created by Sayo Williams 29/12/2020
 let date = new Date()
 date.setDate(date.getDate())
-var entryTime = date.toLocaleString()
+var entryTime = date
 var shop = window.Shopify?.shop
 var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
@@ -16,7 +16,7 @@ var actionData = []
 function onUnload(){
     let date = new Date()
     date.setDate(date.getDate())
-    const exitTime = date.toLocaleString()
+    const exitTime = date
 
     const data = {
         entryTime,
