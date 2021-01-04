@@ -12,8 +12,9 @@ var isScrolling;
 var isTyping;
 
 var actionData = []
+var lastClicked = { name: null, wrapper: null }
 
-function onUnload(){
+function onUnload(e){
     let date = new Date()
     date.setDate(date.getDate())
     const exitTime = date
@@ -28,8 +29,7 @@ function onUnload(){
     }
 
     if (actionData.length && shop && visitor){
-        console.log(JSON.stringify(data))
-        // hook here
+        //console.log(JSON.stringify(data))
         fetch('http://localhost:5000/', {
             method:"POST",
             body: JSON.stringify(data),
@@ -41,6 +41,13 @@ function onUnload(){
         console.log("Completed with result:", result);
         });
     }
+
+    const { name, wrapper } = lastClicked
+    if (name == 'a' || wrapper == 'a'){
+        e.returnValue = null
+    }
+
+    e.returnValue = `Are you sure you want to leave?`;
 }
 
 function logClick(e) {
@@ -49,11 +56,12 @@ function logClick(e) {
     const name = e.target.localName
     const innerText = e.target.innerText
     const navLink = e.target.href
-    const spanWrapper = e.path[1].localName
-    const spanLink = e.path[1].href
+    const wrapper = e.path[1].localName
+    const wrapperLink = e.path[1].href
     
     //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
-    actionData.push({type, clickPosition, name, innerText, navLink, spanWrapper, spanLink})
+    actionData.push({ type, clickPosition, name, innerText, navLink, wrapper, wrapperLink })
+    lastClicked = { name, wrapper }
 }
 
 function logScroll(e){
