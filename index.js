@@ -44,7 +44,7 @@ function onUnload(e){
 
     const { name, wrapper } = lastClicked
     //console.log(lastClicked)
-    if (name !== 'a' && wrapper !== 'a'){
+    if (name !== 'a' && wrapper !== 'a' && name !== 'button'){
         e.returnValue = `Are you sure you want to leave?`;
     }
 
