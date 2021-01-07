@@ -41,10 +41,12 @@ function sendData() {
 }
 
 function onUnload(){
+    console.log('is unload')
     sendData()
 }
 
 function onClose(){
+    console.log('is on close')
     if (document.visibilityState == 'hidden') {
         sendData()
     }
@@ -60,7 +62,7 @@ function logClick(e) {
     const wrapper = e.path[1].localName
     const wrapperLink = e.path[1].href
 
-    if (innerText.match(/buy/i) || innerText.match(/cart/i)) {
+    if (innerText.toLowerCase().includes('buy') || innerText.toLowerCase().includes('cart')) {
         userConverted = true
     }
     //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
