@@ -7,14 +7,11 @@ var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-var scrollCount = 0
-var isScrolling;
 var isTyping;
-
 var actionData = []
-var lastClicked = { name: null, wrapper: null }
+var userConverted = false
 
-function onUnload(e){
+function sendData() {
     let date = new Date()
     date.setDate(date.getDate())
     const exitTime = date
@@ -25,7 +22,8 @@ function onUnload(e){
         visitor,
         pageDims,
         actionData,
-        exitTime
+        exitTime,
+        userConverted
     }
 
     if (actionData.length && shop && visitor){
@@ -37,20 +35,23 @@ function onUnload(e){
             },
         })
         .then(result => {
-        console.log("Completed with result:", result);
+        //console.log("Completed with result:", result);
         });
     }
+}
 
-    const { name, wrapper } = lastClicked
-    //console.log(lastClicked)
-    if (name !== 'a' && wrapper !== 'a' && name !== 'button'){
-        e.returnValue = `Are you sure you want to leave?`;
+function onUnload(){
+    sendData()
+}
+
+function onClose(){
+    if (document.visibilityState == 'hidden') {
+        sendData()
     }
-
 }
 
 function logClick(e) {
-    console.log(e)
+    //console.log(e)
     const type = e.type
     const clickPosition = { x: e.x, y: e.y }
     const name = e.target.localName
@@ -58,26 +59,35 @@ function logClick(e) {
     const navLink = e.target.href
     const wrapper = e.path[1].localName
     const wrapperLink = e.path[1].href
+
+    if (innerText.match(/buy/i) || innerText.match(/cart/i)) {
+        userConverted = true
+    }
+
+
     
     //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
     actionData.push({ type, clickPosition, name, innerText, navLink, wrapper, wrapperLink })
-    lastClicked = { name, wrapper }
 }
 
 
 function logInput(e) {
-    console.log(e)
-    const type = e.type
-    const action = e.inputType
-    const name = e.target.localName
-    const innerText = e.target.ariaLabel
+    //console.log(e)
+    
+    const type = e.type //input
+    const innerText = e.target.ariaLabel // Search
+    const placeHolder = e.target.placeholder //Search
+    const value = e.target.value //thing you typed
     
     window.clearTimeout( isTyping );
 	isTyping = setTimeout(function() {
-        actionData.push({type, action, name, innerText})
+        if (innerText == 'Search' || placeHolder == 'Search') {
+            actionData.push({type, value})
+        }
     }, 750);
 }
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-window.addEventListener('beforeunload', onUnload)
+document.addEventListener('visibilitychange', )
+document.addEventListener('beforeunload', onUnload)
