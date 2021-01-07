@@ -12,6 +12,7 @@ var actionData = []
 var userConverted = false
 
 function sendData() {
+    console.log('data being sent')
     let date = new Date()
     date.setDate(date.getDate())
     const exitTime = date
@@ -48,12 +49,13 @@ function onUnload(){
 function onClose(){
     console.log('is on close')
     if (document.visibilityState == 'hidden') {
+        console.log('is on close and hidden')
         sendData()
     }
 }
 
 function logClick(e) {
-    //console.log(e)
+    console.log(e)
     const type = e.type
     const clickPosition = { x: e.x, y: e.y }
     const name = e.target.localName
@@ -62,9 +64,13 @@ function logClick(e) {
     const wrapper = e.path[1].localName
     const wrapperLink = e.path[1].href
 
-    if (innerText.toLowerCase().includes('buy') || innerText.toLowerCase().includes('cart')) {
-        userConverted = true
+    if (innerText){
+        if (innerText.toLowerCase().includes('buy') || innerText.toLowerCase().includes('cart')) {
+            userConverted = true
+        }
     }
+
+    
     //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
     actionData.push({ type, clickPosition, name, innerText, navLink, wrapper, wrapperLink })
 }
@@ -89,4 +95,4 @@ function logInput(e) {
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
 document.addEventListener('visibilitychange', onClose)
-document.addEventListener('beforeunload', onUnload)
+window.addEventListener('beforeunload', onUnload)
