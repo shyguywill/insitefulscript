@@ -35,7 +35,7 @@ function sendData() {
             },
         })
         .then(result => {
-        //console.log("Completed with result:", result);
+        console.log("Completed with result:", result);
         });
     }
 }
@@ -63,9 +63,6 @@ function logClick(e) {
     if (innerText.match(/buy/i) || innerText.match(/cart/i)) {
         userConverted = true
     }
-
-
-    
     //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
     actionData.push({ type, clickPosition, name, innerText, navLink, wrapper, wrapperLink })
 }
@@ -89,5 +86,5 @@ function logInput(e) {
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-document.addEventListener('visibilitychange', )
+document.addEventListener('visibilitychange', onClose)
 document.addEventListener('beforeunload', onUnload)
