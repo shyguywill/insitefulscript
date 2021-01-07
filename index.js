@@ -29,7 +29,6 @@ function onUnload(e){
     }
 
     if (actionData.length && shop && visitor){
-        //console.log(JSON.stringify(data))
         fetch('http://localhost:5000/', {
             method:"POST",
             body: JSON.stringify(data),
@@ -51,6 +50,7 @@ function onUnload(e){
 }
 
 function logClick(e) {
+    console.log(e)
     const type = e.type
     const clickPosition = { x: e.x, y: e.y }
     const name = e.target.localName
@@ -64,19 +64,9 @@ function logClick(e) {
     lastClicked = { name, wrapper }
 }
 
-function logScroll(e){
-    const type = e.type
-    window.clearTimeout( isScrolling );
-	isScrolling = setTimeout(function() {
-        scrollCount += 1
-        const scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-        
-        //console.log(type, scrollTop, scrollCount)
-        actionData.push({type, scrollTop, scrollCount})
-    }, 1000);
-}
 
 function logInput(e) {
+    console.log(e)
     const type = e.type
     const action = e.inputType
     const name = e.target.localName
@@ -90,5 +80,4 @@ function logInput(e) {
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-window.addEventListener('scroll', logScroll)
 window.addEventListener('beforeunload', onUnload)
