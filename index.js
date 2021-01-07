@@ -27,8 +27,7 @@ function sendData() {
         userConverted
     }
     const jsonData = JSON.stringify(data)
-    const blob = new Blob([jsonData], {type : 'application/json; charset=UTF-8'});
-
+    console.log(jsonData)
     if (actionData.length && shop && visitor){
         // fetch('http://localhost:5000/', {
         //     method:"POST",
@@ -40,7 +39,7 @@ function sendData() {
         // .then(result => {
         // console.log("Completed with result:", result);
         // });
-        navigator.sendBeacon('http://localhost:5000/', blob)
+        navigator.sendBeacon('http://localhost:5000/', jsonData)
     }
 }
 
