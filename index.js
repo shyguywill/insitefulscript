@@ -10,9 +10,11 @@ var pageDims = {height: document.body.scrollHeight, width: Math.min(document.bod
 let isTyping;
 let actionData = []
 let userConverted = false
+let userAddedToCart = false
+let userClickedBuy = false
 
 function sendData() {
-    console.log('data being sent')
+   // console.log('data being sent')
     let date = new Date()
     date.setDate(date.getDate())
     const exitTime = date
@@ -24,7 +26,8 @@ function sendData() {
         pageDims,
         actionData,
         exitTime,
-        userConverted
+        userClickedBuy,
+        userAddedToCart,
     }
     const jsonData = JSON.stringify(data)
     //console.log(jsonData)
@@ -55,9 +58,12 @@ function logClick(e) {
     const wrapperLink = e.path[1].href
 
     if (innerText){
-        if (innerText.toLowerCase().includes('buy') || innerText.toLowerCase().includes('cart')) {
-            userConverted = true
+        if (innerText.toLowerCase().includes('cart')) {
+            userAddedToCart = true
         }
+        else if (innerText.toLowerCase().includes('buy')) {
+            userClickedBuy = true
+        } 
     }
 
     
@@ -76,6 +82,10 @@ function logInput(e) {
     
     window.clearTimeout( isTyping );
 	isTyping = setTimeout(function() {
+        if (!actionData.length){
+            console.log('adding listener')
+            document.addEventListener('visibilitychange', onClose, {once: true})
+        }
         if (innerText == 'Search' || placeHolder == 'Search') {
             actionData.push({type, value})
         }
