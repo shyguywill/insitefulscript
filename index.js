@@ -7,9 +7,9 @@ var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
 var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-var isTyping;
-var actionData = []
-var userConverted = false
+let isTyping;
+let actionData = []
+let userConverted = false
 
 function sendData() {
     console.log('data being sent')
@@ -30,6 +30,7 @@ function sendData() {
     //console.log(jsonData)
     if (actionData.length && shop && visitor){
         navigator.sendBeacon('http://localhost:5000/', jsonData)
+        actionData = []
     }
 }
 
@@ -40,7 +41,11 @@ function onClose(){
 }
 
 function logClick(e) {
-    console.log(e)
+    if (!actionData.length){
+        console.log('adding listener')
+        document.addEventListener('visibilitychange', onClose, {once: true})
+    }
+    //console.log(e)
     const type = e.type
     const clickPosition = { x: e.x, y: e.y }
     const name = e.target.localName
@@ -79,4 +84,4 @@ function logInput(e) {
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-document.addEventListener('visibilitychange', onClose, true)
+//document.addEventListener('visibilitychange', onClose, {once: true})
