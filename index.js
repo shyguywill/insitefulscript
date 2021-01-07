@@ -27,31 +27,14 @@ function sendData() {
         userConverted
     }
     const jsonData = JSON.stringify(data)
-    console.log(jsonData)
+    //console.log(jsonData)
     if (actionData.length && shop && visitor){
-        // fetch('http://localhost:5000/', {
-        //     method:"POST",
-        //     body: JSON.stringify(data),
-        //     headers: {
-        //         'Content-Type': "application/json",
-        //     },
-        // })
-        // .then(result => {
-        // console.log("Completed with result:", result);
-        // });
         navigator.sendBeacon('http://localhost:5000/', jsonData)
     }
 }
 
-// function onUnload(){
-//     console.log('is unload')
-//     sendData()
-// }
-
 function onClose(){
-    console.log('is on close')
     if (document.visibilityState == 'hidden') {
-        console.log('is on close and hidden')
         sendData()
     }
 }
@@ -96,5 +79,4 @@ function logInput(e) {
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-document.addEventListener('visibilitychange', onClose)
-//window.addEventListener('beforeunload', onUnload)
+document.addEventListener('visibilitychange', onClose, true)
