@@ -4,8 +4,8 @@ date.setDate(date.getDate())
 var entryTime = date
 var shop = window.Shopify?.shop
 var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
-var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
-var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
+// var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
+// var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
 let isTyping;
 let actionData = []
@@ -23,7 +23,6 @@ function sendData() {
         entryTime,
         shop,
         visitor,
-        pageDims,
         actionData,
         exitTime,
         userClickedBuy,
@@ -48,14 +47,14 @@ function logClick(e) {
         console.log('adding listener')
         document.addEventListener('visibilitychange', onClose, {once: true})
     }
-    console.log(e)
+    //console.log(e)
     const type = e.type
-    const clickPosition = { x: e.x, y: e.y }
     const name = e.target.localName
     const innerText = e.target.innerText
     const navLink = e.target.href
     const wrapper = e.path[1].localName
     const wrapperLink = e.path[1].href
+    const value = e.target.value
 
     if (innerText){
         if (innerText.toLowerCase().includes('cart')) {
@@ -66,10 +65,10 @@ function logClick(e) {
         } 
     }
 
-    console.log(e.target.type, e.target.value, e.target.name)
+    //console.log(e.target.type, e.target.value, e.target.name)
     
     //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
-    actionData.push({ type, clickPosition, name, innerText, navLink, wrapper, wrapperLink })
+    actionData.push({ type, name, innerText, navLink, wrapper, wrapperLink, value })
 }
 
 
