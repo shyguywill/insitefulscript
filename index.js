@@ -48,7 +48,7 @@ function logClick(e) {
         console.log('adding listener')
         document.addEventListener('visibilitychange', onClose, {once: true})
     }
-    //console.log(e)
+    console.log(e)
     const type = e.type
     const clickPosition = { x: e.x, y: e.y }
     const name = e.target.localName
@@ -66,6 +66,7 @@ function logClick(e) {
         } 
     }
 
+    console.log(e.target.type, e.target.value, e.target.name)
     
     //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
     actionData.push({ type, clickPosition, name, innerText, navLink, wrapper, wrapperLink })
