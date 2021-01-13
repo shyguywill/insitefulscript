@@ -29,9 +29,8 @@ function sendData() {
         userAddedToCart,
     }
     const jsonData = JSON.stringify(data)
-    //console.log(jsonData)
     if (actionData.length && shop && visitor){
-        navigator.sendBeacon('http://localhost:5000/', jsonData)
+        navigator.sendBeacon('https://insitefulapiv1.herokuapp.com/', jsonData)
         actionData = []
     }
 }
@@ -47,7 +46,6 @@ function logClick(e) {
         console.log('adding listener')
         document.addEventListener('visibilitychange', onClose, {once: true})
     }
-    //console.log(e)
     const type = e.type
     const name = e.target.localName
     const innerText = e.target.innerText
@@ -65,16 +63,11 @@ function logClick(e) {
         } 
     }
 
-    //console.log(e.target.type, e.target.value, e.target.name)
-    
-    //console.log(type, clickPosition, name, innerText, navLink, spanWrapper, spanLink)
     actionData.push({ type, name, innerText, navLink, wrapper, wrapperLink, value })
 }
 
 
 function logInput(e) {
-    //console.log(e)
-    
     const type = e.type //input
     const innerText = e.target.ariaLabel // Search
     const placeHolder = e.target.placeholder //Search
@@ -94,4 +87,3 @@ function logInput(e) {
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-//document.addEventListener('visibilitychange', onClose, {once: true})
