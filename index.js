@@ -7,7 +7,8 @@ var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
 // var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 // var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-var isTyping;
+var isTyping
+var isTouching
 var actionData = []
 var userConverted = false
 var userAddedToCart = false
@@ -41,11 +42,21 @@ function onClose(){
     }
 }
 
+function logInput(e) {
+    var type = e.type //input
+    var innerText = e.target.ariaLabel // Search
+    var placeHolder = e.target.placeholder //Search
+    var value = e.target.value //thing you typed
+    
+    window.clearTimeout( isTyping );
+	isTyping = setTimeout(function() {
+        if (innerText == 'Search' || placeHolder == 'Search') {
+            actionData.push({type, value})
+        }
+    }, 750);
+}
+
 function logClick(e) {
-    // if (!actionData.length){
-    //     console.log('adding listener')
-    //     document.addEventListener('visibilitychange', onClose, {once: true})
-    // }
     var type = e.type
     var name = e.target.localName
     var innerText = e.target.innerText
@@ -66,26 +77,37 @@ function logClick(e) {
     actionData.push({ type, name, innerText, navLink, wrapper, wrapperLink, value })
 }
 
+function logTouch(e) {
+    var type = e.type
+    var name = e.target.localName
+    var innerText = e.target.innerText
+    var navLink = e.target.href
+    var wrapper = e.path[1].localName
+    var wrapperLink = e.path[1].href
+    var value = e.target.value
 
-function logInput(e) {
-    var type = e.type //input
-    var innerText = e.target.ariaLabel // Search
-    var placeHolder = e.target.placeholder //Search
-    var value = e.target.value //thing you typed
-    
-    window.clearTimeout( isTyping );
-	isTyping = setTimeout(function() {
-        // if (!actionData.length){
-        //     console.log('adding listener')
-        //     document.addEventListener('visibilitychange', onClose, {once: true})
-        // }
-        if (innerText == 'Search' || placeHolder == 'Search') {
-            actionData.push({type, value})
+    if (innerText){
+        if (innerText.toLowerCase().includes('cart')) {
+            userAddedToCart = true
         }
-    }, 750);
+        else if (innerText.toLowerCase().includes('buy')) {
+            userClickedBuy = true
+        } 
+    }
+
+    window.clearTimeout( isTouching );
+	isTouching = setTimeout(function() {
+        actionData.push({ type, name, innerText, navLink, wrapper, wrapperLink, value })
+    }, 250);
+
+    
 }
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-document.addEventListener('touchstart', logClick)
-document.addEventListener('visibilitychange', onClose)
+
+//document.addEventListener('visibilitychange', onClose)
+window.addEventListener('visibilitychange', onClose)
+
+//document.addEventListener('touchstart', logTouch)
+window.addEventListener('touchstart', logTouch)
