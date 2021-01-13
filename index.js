@@ -30,16 +30,16 @@ function sendData() {
         userAddedToCart,
     }
     var jsonData = JSON.stringify(data)
-    if (actionData.length && shop && visitor){
+    //if (actionData.length && shop && visitor){
         navigator.sendBeacon('https://insitefulapiv1.herokuapp.com/', jsonData)
         actionData = []
-    }
+   // }
 }
 
 function onClose(){
-    if (document.visibilityState == 'hidden') {
+   // if (document.visibilityState == 'hidden') {
         sendData()
-    }
+   // }
 }
 
 function logInput(e) {
