@@ -42,10 +42,10 @@ function onClose(){
 }
 
 function logClick(e) {
-    if (!actionData.length){
-        console.log('adding listener')
-        document.addEventListener('visibilitychange', onClose, {once: true})
-    }
+    // if (!actionData.length){
+    //     console.log('adding listener')
+    //     document.addEventListener('visibilitychange', onClose, {once: true})
+    // }
     var type = e.type
     var name = e.target.localName
     var innerText = e.target.innerText
@@ -75,10 +75,10 @@ function logInput(e) {
     
     window.clearTimeout( isTyping );
 	isTyping = setTimeout(function() {
-        if (!actionData.length){
-            console.log('adding listener')
-            document.addEventListener('visibilitychange', onClose, {once: true})
-        }
+        // if (!actionData.length){
+        //     console.log('adding listener')
+        //     document.addEventListener('visibilitychange', onClose, {once: true})
+        // }
         if (innerText == 'Search' || placeHolder == 'Search') {
             actionData.push({type, value})
         }
@@ -88,3 +88,4 @@ function logInput(e) {
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
 document.addEventListener('touchstart', logClick)
+document.addEventListener('visibilitychange', onClose)
