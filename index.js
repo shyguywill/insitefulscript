@@ -1,5 +1,5 @@
 //Created by Sayo Williams 29/12/2020
-let date = new Date()
+var date = new Date()
 date.setDate(date.getDate())
 var entryTime = date
 var shop = window.Shopify?.shop
@@ -7,19 +7,19 @@ var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
 // var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 // var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
-let isTyping;
-let actionData = []
-let userConverted = false
-let userAddedToCart = false
-let userClickedBuy = false
+var isTyping;
+var actionData = []
+var userConverted = false
+var userAddedToCart = false
+var userClickedBuy = false
 
 function sendData() {
    // console.log('data being sent')
-    let date = new Date()
+    var date = new Date()
     date.setDate(date.getDate())
-    const exitTime = date
+    var exitTime = date
 
-    const data = {
+    var data = {
         entryTime,
         shop,
         visitor,
@@ -28,7 +28,7 @@ function sendData() {
         userClickedBuy,
         userAddedToCart,
     }
-    const jsonData = JSON.stringify(data)
+    var jsonData = JSON.stringify(data)
     if (actionData.length && shop && visitor){
         navigator.sendBeacon('https://insitefulapiv1.herokuapp.com/', jsonData)
         actionData = []
@@ -46,13 +46,13 @@ function logClick(e) {
         console.log('adding listener')
         document.addEventListener('visibilitychange', onClose, {once: true})
     }
-    const type = e.type
-    const name = e.target.localName
-    const innerText = e.target.innerText
-    const navLink = e.target.href
-    const wrapper = e.path[1].localName
-    const wrapperLink = e.path[1].href
-    const value = e.target.value
+    var type = e.type
+    var name = e.target.localName
+    var innerText = e.target.innerText
+    var navLink = e.target.href
+    var wrapper = e.path[1].localName
+    var wrapperLink = e.path[1].href
+    var value = e.target.value
 
     if (innerText){
         if (innerText.toLowerCase().includes('cart')) {
@@ -68,10 +68,10 @@ function logClick(e) {
 
 
 function logInput(e) {
-    const type = e.type //input
-    const innerText = e.target.ariaLabel // Search
-    const placeHolder = e.target.placeholder //Search
-    const value = e.target.value //thing you typed
+    var type = e.type //input
+    var innerText = e.target.ariaLabel // Search
+    var placeHolder = e.target.placeholder //Search
+    var value = e.target.value //thing you typed
     
     window.clearTimeout( isTyping );
 	isTyping = setTimeout(function() {
