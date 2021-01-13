@@ -40,7 +40,6 @@ function sendData() {
 }
 
 function onClose(){
-    console.log(document.visibilityState)
    if (document.visibilityState == 'hidden') {
         sendData()
    }
@@ -94,4 +93,4 @@ document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
 document.addEventListener('visibilitychange', onClose)
 
-window.addEventListener('beforeunload', onMobileNavigation)
+window.addEventListener('pagehide', onMobileNavigation)
