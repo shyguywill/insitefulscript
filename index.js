@@ -2,24 +2,25 @@
 var date = new Date()
 date.setDate(date.getDate())
 var entryTime = date
-var shop =  '' //window.Shopify?.shop
-var visitor = '' //window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
-console.log(window)
 // var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 // var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
 var isTyping
-var isTouching
 var actionData = []
-var userConverted = false
 var userAddedToCart = false
 var userClickedBuy = false
 
+function getWindowVariables() {
+    var shop =  window.Shopify.shop
+    var visitor = window.ShopifyAnalytics.lib.trekkie.defaultAttributes.uniqToken
+    return { shop, visitor }
+}
+
 function sendData() {
-   console.log('data being sent')
     var date = new Date()
     date.setDate(date.getDate())
     var exitTime = date
+    var {visitor, shop} = getWindowVariables()
 
     var data = {
         entryTime,
@@ -32,12 +33,14 @@ function sendData() {
     }
     var jsonData = JSON.stringify(data)
     if (actionData.length && shop && visitor){
+        console.log('data being sent', jsonData)
         navigator.sendBeacon('https://insitefulapiv1.herokuapp.com/', jsonData)
         actionData = []
    }
 }
 
 function onClose(){
+    console.log(document.visibilityState)
    if (document.visibilityState == 'hidden') {
         sendData()
    }
@@ -58,13 +61,12 @@ function logInput(e) {
 }
 
 function logClick(e) {
-    console.log(e)
     var type = e.type
     var name = e.target.localName
     var innerText = e.target.innerText
     var navLink = e.target.href
-    var wrapper = e.path[1].localName
-    var wrapperLink = e.path[1].href
+    var wrapper = e.path ? e.path[1].localName : null//
+    var wrapperLink = e.path ? e.path[1].href  : null//
     var value = e.target.value
 
     if (innerText){
@@ -82,3 +84,7 @@ function logClick(e) {
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
 document.addEventListener('visibilitychange', onClose)
+
+window.addEventListener('unload', function(e) {
+    console.log('unloading')
+})
