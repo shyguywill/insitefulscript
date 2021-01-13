@@ -2,8 +2,9 @@
 var date = new Date()
 date.setDate(date.getDate())
 var entryTime = date
-var shop = window.Shopify?.shop
-var visitor = window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
+var shop =  '' //window.Shopify?.shop
+var visitor = '' //window.ShopifyAnalytics?.lib.trekkie.defaultAttributes?.uniqToken
+console.log(window)
 // var contentWidth = [...document.body.children].reduce((a, el) => Math.max(a, el.getBoundingClientRect().right), 0) - document.body.getBoundingClientRect().x
 // var pageDims = {height: document.body.scrollHeight, width: Math.min(document.body.scrollWidth, contentWidth)}
 
@@ -15,7 +16,7 @@ var userAddedToCart = false
 var userClickedBuy = false
 
 function sendData() {
-   // console.log('data being sent')
+   console.log('data being sent')
     var date = new Date()
     date.setDate(date.getDate())
     var exitTime = date
@@ -30,16 +31,16 @@ function sendData() {
         userAddedToCart,
     }
     var jsonData = JSON.stringify(data)
-    //if (actionData.length && shop && visitor){
+    if (actionData.length && shop && visitor){
         navigator.sendBeacon('https://insitefulapiv1.herokuapp.com/', jsonData)
         actionData = []
-   // }
+   }
 }
 
 function onClose(){
-   // if (document.visibilityState == 'hidden') {
+   if (document.visibilityState == 'hidden') {
         sendData()
-   // }
+   }
 }
 
 function logInput(e) {
@@ -57,6 +58,7 @@ function logInput(e) {
 }
 
 function logClick(e) {
+    console.log(e)
     var type = e.type
     var name = e.target.localName
     var innerText = e.target.innerText
