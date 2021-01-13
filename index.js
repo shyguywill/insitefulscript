@@ -79,4 +79,4 @@ function logClick(e) {
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-window.addEventListener('visibilitychange', onClose)
+document.addEventListener('visibilitychange', onClose)
