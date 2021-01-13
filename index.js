@@ -77,37 +77,6 @@ function logClick(e) {
     actionData.push({ type, name, innerText, navLink, wrapper, wrapperLink, value })
 }
 
-function logTouch(e) {
-    var type = e.type
-    var name = e.target.localName
-    var innerText = e.target.innerText
-    var navLink = e.target.href
-    var wrapper = e.path[1].localName
-    var wrapperLink = e.path[1].href
-    var value = e.target.value
-
-    if (innerText){
-        if (innerText.toLowerCase().includes('cart')) {
-            userAddedToCart = true
-        }
-        else if (innerText.toLowerCase().includes('buy')) {
-            userClickedBuy = true
-        } 
-    }
-
-    window.clearTimeout( isTouching );
-	isTouching = setTimeout(function() {
-        actionData.push({ type, name, innerText, navLink, wrapper, wrapperLink, value })
-    }, 250);
-
-    
-}
-
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
-
-//document.addEventListener('visibilitychange', onClose)
 window.addEventListener('visibilitychange', onClose)
-
-//document.addEventListener('touchstart', logTouch)
-window.addEventListener('touchstart', logTouch)
