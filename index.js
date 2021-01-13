@@ -87,3 +87,4 @@ function logInput(e) {
 
 document.addEventListener('input', logInput)
 document.addEventListener('click', logClick)
+document.addEventListener('touchstart', logClick)
